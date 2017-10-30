@@ -1,0 +1,140 @@
+canvas.drawing, canvas.drawingBuffer {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+html {
+        font-size: 16px;
+}
+
+h1{
+        font-weight: bold;
+}
+
+video {
+        width: 100%;
+        height: auto;
+        right: 0;
+        bottom: 0;
+        min-width: 100%;
+        min-height: 100%;
+        width: 50%;
+        height: auto;
+        z-index: -100;
+        background-size: cover;
+        border: 10px solid black;
+        border-radius: 2%;
+        margin-bottom: 20px;
+}
+
+main {
+        background-image: url("https://unsplash.imgix.net/photo-1414490929659-9a12b7e31907");
+        height: 100vh;
+        margin-top: 51px;
+        background-size: cover;
+        background-position: center;
+        margin-bottom: 50px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+}
+
+#outcome {
+        font-size: 1.5rem;
+        text-align: center;
+        margin: 10px;
+}
+
+.display-product-info {
+        text-align: center;
+        background-color: #e6e6e6;
+        padding-top: 20px;
+        margin-top: 20px;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+}
+
+.refresh {
+        text-align: center;
+}
+
+.refresh a {
+        text-decoration: none;
+        background-color:#286090;
+        color: white;
+        padding: 8px;
+        font-size: 1.2rem;
+        border-radius: 5px;
+        margin-top: 10px;
+}
+
+#display-image {
+        width: 600px;
+        margin: 0 auto;
+}
+
+#btn {
+        padding: 15px;
+        font-size:  1rem;
+}
+
+p{
+        font-size: 1.1rem;
+
+}
+
+.display-product-info h1 {
+        font-weight: bold;
+        color: #286090;
+}
+
+h3, h4 {
+        font-weight: bold;
+}
+
+footer {
+        text-align: center;
+
+}
+
+.footer-links {
+        display: flex;
+        list-style: none;
+        justify-content: space-around;
+}
+
+.footer-links a {
+        color: #7a7979;
+        text-decoration: none;
+}
+
+.footer-links a:hover{
+        color: #4d4b4b;
+}
+
+.copyright {
+        font-size: 0.9rem;
+        font-weight: bold;
+}
+
+.image-container {
+        margin-top: 100px;
+}
+
+.img-border {
+        border: 1px solid black;
+        padding: 20px;
+        margin: 20px;
+}
+
+.img-border img {
+        margin-bottom: 20px;
+}
+
+.img-border  p {
+        text-align: center;
+        font-weight: bold;
+}

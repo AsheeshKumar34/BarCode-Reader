@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>BarCode Scanner</title>
+
+        <!-- Bootstrap -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.js"></script>
+        <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script>
+
+        <link rel="stylesheet" href="assets/css/style.css">
+        <script src="assets/js/index.js"></script>
+    </head>
+
+    <body>
+        <header>
+            <div class="navbar navbar=default navbar-inverse navbar-fixed-top" role="navigation">
+                <div class="container">
+                    <div class="navbar-header">
+                        <a href="#" class="navbar-brand">BarCode</a>
+
+                        <button type="button" class="navbar-toggle collaspe" data-toggle="collapse" data-target="#navHeaderCollapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+
+                    <!--do we need collapse and navbar-collapse-->
+                    <div class="collapse navbar-collapse" id="navHeaderCollapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="cart.html">Cart</a></li>
+                            <li><a href="#">Social Media</a></li>
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Landing Page -->
+        <main>
+            <h1>Hey Visitor!</h1>
+            <h4>Its nice to see you.</h4>
+            <h4>Click the below button to scan Bar Code</h4>
+        </main>
+
+        <!-- Scanner -->
+        <div id="scanner-container"></div>
+
+        <input type="button" onclick="waitMessage()" value="Start/Stop the scanner" id="btn" class="btn btn-primary btn-lg center-block"/>
+        <p id="outcome"></p>
+
+        <!-- Product information -->
+        <div class="display-product-info">
+            <h1>PRODUCT INFORMATION</h1>
+            <h3>Title</h3>
+            <p id="display-title"></p>
+            <h3>Price</h3>
+            <p id="display-price"></p>
+            <h3>Preview</h3>
+            <img src="" class="img-responsive" id="display-image">
+        </div>
+        <div class="refresh">
+            <a href="index.html">Scan another product</a>
+        </div>
+        <hr>
+
+        <!-- Footer -->
+        <footer>
+            <ul class="footer-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Social Media</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact Us</a></li>
+            </ul>
+            <p class="copyright">&copy; BarCodeScanner.com</p>
+        </footer>
+
+        <!-- Include the image-diff library -->
+        <script src="https://cdn.rawgit.com/serratus/quaggaJS/0420d5e0/dist/quagga.min.js"></script>
+
+        <script>
+            var _scannerIsRunning = false;
+
+            function startScanner() {
+                Quagga.init({
+                    inputStream: {
+                        name: "Live",
+                        type: "LiveStream",
+                        target: document.querySelector('#scanner-container'),
+                        constraints: {
+                            width: 480,
+                            height: 320,
+                            facingMode: "environment"
+                        },
+                    },
+                    decoder: {
+                        readers: [
+                            "code_128_reader",
+                            "ean_reader",
+                            "ean_8_reader",
+                            "code_39_reader",
+                            "code_39_vin_reader",
+                            "codabar_reader",
+                            "upc_reader",
+                            "upc_e_reader",
+                            "i2of5_reader"
+                        ],
+                        debug: {
+                            showCanvas: true,
+                            showPatches: true,
+                            showFoundPatches: true,
+                            showSkeleton: true,
+                            showLabels: true,
+                            showPatchLabels: true,
+                            showRemainingPatchLabels: true,
+                            boxFromPatches: {
+                                showTransformed: true,
+                                showTransformedBox: true,
+                                showBB: true
+                            }
+                        }
+                    },
+
+                }, function (err) {
+                    if (err) {
+                        console.log(err);
+                        return
+                    }
+
+                    console.log("Initialization finished. Ready to start");
+                    Quagga.start();
+
+                    // Set flag to is running
+                    _scannerIsRunning = true;
+                });
+
+                Quagga.onDetected(function (result) {
+                    console.log("Barcode detected and processed : [" + result.codeResult.code + "]", result);
+                    document.getElementById("outcome").style.color = "green";
+                    document.getElementById("outcome").innerHTML = "Successfully scanned";
+                    var upc = [8901138512460, 9780070635463, 8901030609435];
+                    var data = [
+                    {
+                        title: "Himalaya Neem Face Wash",
+                        price: 110,
+                        img: "assets/img/Himalaya.jpg",
+                        upc_code: 8901138512460
+                    },
+                    {
+                        title: "Unix (Concepts and Applications)",
+                        price: 800,
+                        img: "assets/img/Unix_Book.jpg",
+                        upc_code: 9780070635463
+                    },
+                    {
+                        title: "Pears Soap",
+                        price: 38,
+                        img: "assets/img/Pears.jpg",
+                        upc_code: 8901030609435
+                    },
+                    ];
+                    for(var i = 0; i < upc.length; i++) {
+                        if(upc[i] == result.codeResult.code) {
+                            if(data[i].upc_code == result.codeResult.code) {
+                            document.getElementById("display-title").innerHTML = data[i].title;
+                            document.getElementById("display-price").innerHTML = data[i].price;
+                            document.getElementById("display-image").src = data[i].img;
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Start/stop scanner
+            document.getElementById("btn").addEventListener("click", function () {
+                if (_scannerIsRunning) {
+                    Quagga.stop();
+                    document.getElementById("scanner-container").style.visibility = "hidden";
+                } else {
+                    startScanner();
+                }
+            }, false);
+        </script>
+    </body>
+</html>
